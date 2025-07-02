@@ -75,6 +75,11 @@ python main.py --mode schedule --daily-time "10:00" --weekly-time "11:00"
 ```python
 self.headers["Authorization"] = "token YOUR_GITHUB_TOKEN"
 ```
+ **生成个人访问令牌**：
+        *   访问 GitHub 个人设置 -> Developer settings -> Personal access tokens -> Tokens (classic)。
+        *   点击“Generate new token”或“Generate new token (classic)”。
+        *   为 Token 命名（例如：`GitHub StarHub Token`），并授予必要的权限（至少需要 `public_repo` 或 `repo` 权限，具体取决于您需要访问的仓库类型）。
+        *   生成后，请务必复制您的 Token，因为它只会显示一次。
 
 ## 自定义
 
