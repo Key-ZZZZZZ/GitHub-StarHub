@@ -129,6 +129,19 @@ GitHub StarHub 是一个用于抓取、分析和展示 GitHub项目数据的应�
     ```bash
     npm run serve
     ```
+## 注意事项
+
+- GitHub API 有请求频率限制，建议添加个人 Token 以提高限制
+- 在 `github_trending.py` 文件中的 `__init__` 方法中添加您的 GitHub Token：
+
+```python
+self.headers["Authorization"] = "token YOUR_GITHUB_TOKEN"
+```
+ **生成个人访问令牌**：
+        *   访问 GitHub 个人设置 -> Developer settings -> Personal access tokens -> Tokens (classic)。
+        *   点击“Generate new token”或“Generate new token (classic)”。
+        *   为 Token 命名（例如：`GitHub StarHub Token`），并授予必要的权限（至少需要 `public_repo` 或 `repo` 权限，具体取决于您需要访问的仓库类型）。
+        *   生成后，请务必复制您的 Token，因为它只会显示一次。
 
 ## 7. 贡献
 
