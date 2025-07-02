@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+
+# Frontend (Vue.js example)
+frontend/node_modules/
+frontend/dist/
+
+# Data files (if generated and not part of source)
+data/*.json
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Other specific files
+bash.exe.stackdump
