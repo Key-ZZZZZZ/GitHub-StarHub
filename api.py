@@ -674,6 +674,39 @@ def get_execution_detail(record_id):
         session.close()
 
 
+@app.route('/api/execution-record/<int:record_id>', methods=['DELETE'])
+def delete_execution_record(record_id):
+    session = SessionLocal()
+    try:
+        # 查询执行记录
+        record = session.query(ExecutionRecord).get(record_id)
+        if not record:
+            session.close()
+            return jsonify({"error": "执行记录不存在"}), 404
+
+        # 查询并删除所有关联的 TrendingProject
+        projects_to_delete = session.query(TrendingProject).filter(
+            TrendingProject.execution_record_id == record_id
+        ).all()
+        for project in projects_to_delete:
+            session.delete(project)
+
+        # 强制将删除操作发送到数据库，确保子记录先被删除
+        session.flush()
+
+        # 删除执行记录本身
+        session.delete(record)
+        session.commit()
+
+        return jsonify({"message": f"执行记录 {record_id} 及其关联项目已成功删除"}), 200
+    except Exception as e:
+        session.rollback()
+        print(f"删除执行记录失败: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        session.close()
+
+
 if __name__ == '__main__':
     # 确保数据目录存在，这部分逻辑可以从main.py移到此处或共享
     if not os.path.exists(os.path.join(current_dir, "data")):
@@ -682,5 +715,5 @@ if __name__ == '__main__':
         os.makedirs(os.path.join(current_dir, "data", "visualizations"))
     
     print("启动API服务器，关闭调试模式以避免自动重启影响调度器线程...")
-    app.run(host="127.0.0.1", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)
 

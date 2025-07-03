@@ -2,6 +2,7 @@ import argparse
 import os
 from github_trending import GitHubTrending
 from visualizer import TrendingVisualizer
+from db import create_db_tables
 import schedule
 import time
 from datetime import datetime
@@ -84,4 +85,5 @@ if __name__ == "__main__":
     if not os.path.exists(os.path.join("data", "visualizations")):
         os.makedirs(os.path.join("data", "visualizations"))
     
+    create_db_tables()
     main()

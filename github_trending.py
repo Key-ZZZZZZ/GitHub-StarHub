@@ -15,7 +15,7 @@ class GitHubTrending:
             "Accept": "application/vnd.github.v3+json"
         }
         # 添加您的 GitHub Token
-        self.headers["Authorization"] = "YOUR_PERSONAL_ACCESS_TOKEN"
+        self.headers["Authorization"] = "添加您的 GitHub Token"
         
         self.save_dir = save_dir
         if not os.path.exists(save_dir):

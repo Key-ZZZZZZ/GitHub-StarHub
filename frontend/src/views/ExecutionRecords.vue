@@ -116,37 +116,38 @@
       </template>
       
       <el-table :data="executionHistory" style="width: 100%">
-        <el-table-column prop="executionTime" label="执行时间" width="180">
+        <el-table-column prop="executionTime" label="执行时间" width="180" header-align="center" align="center">
           <template #default="scope">
             {{ formatTimestamp(scope.row.executionTime) }}
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="类型" width="100">
+        <el-table-column prop="type" label="类型" width="100" header-align="center" align="center">
           <template #default="scope">
             <el-tag :type="scope.row.type === 'daily' ? 'primary' : 'success'">
               {{ scope.row.type === 'daily' ? '每日榜' : '每周榜' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="状态" width="100">
+        <el-table-column prop="status" label="状态" width="100" header-align="center" align="center">
           <template #default="scope">
             <el-tag :type="getStatusType(scope.row.status)">
               {{ getStatusText(scope.row.status) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="finishTime" label="完成时间" width="180">
+        <el-table-column prop="finishTime" label="完成时间" width="180" header-align="center" align="center">
           <template #default="scope">
             {{ formatTimestamp(scope.row.finishTime) }}
           </template>
         </el-table-column>
-        <el-table-column prop="count" label="总数" width="80" />
-        <el-table-column prop="stars" label="星标" width="80" />
-        <el-table-column prop="updates" label="更新" width="80" />
-        <el-table-column prop="duration" label="耗时" width="80" />
-        <el-table-column label="操作" width="120">
+        <el-table-column prop="count" label="总数" width="80" header-align="center" align="center" />
+        <el-table-column prop="stars" label="星标" width="80" header-align="center" align="center" />
+        <el-table-column prop="updates" label="更新" width="80" header-align="center" align="center" />
+        <el-table-column prop="duration" label="耗时" width="80" header-align="center" align="center" />
+        <el-table-column label="操作" width="120" header-align="center" align="center">
           <template #default="scope">
             <el-button text type="primary" @click="viewDetail(scope.row)">查看详情</el-button>
+            <el-button text type="danger" @click="deleteRecord(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -300,7 +301,7 @@
               </template>
             </el-table-column>
             
-            <el-table-column label="操作" width="120">
+            <el-table-column label="操作" width="120" header-align="center" align="center">
               <template #default="scope">
                 <el-button text type="primary" @click="viewProjectDetails(scope.row)">查看详情</el-button>
               </template>
@@ -330,37 +331,38 @@
       destroy-on-close
     >
       <el-table :data="paginatedAllExecutionHistory" style="width: 100%">
-        <el-table-column prop="executionTime" label="执行时间" width="180">
+        <el-table-column prop="executionTime" label="执行时间" width="180" header-align="center" align="center">
           <template #default="scope">
             {{ formatTimestamp(scope.row.executionTime) }}
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="类型" width="100">
+        <el-table-column prop="type" label="类型" width="100" header-align="center" align="center">
           <template #default="scope">
             <el-tag :type="scope.row.type === 'daily' ? 'primary' : 'success'">
               {{ scope.row.type === 'daily' ? '每日榜' : '每周榜' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="状态" width="100">
+        <el-table-column prop="status" label="状态" width="100" header-align="center" align="center">
           <template #default="scope">
             <el-tag :type="getStatusType(scope.row.status)">
               {{ getStatusText(scope.row.status) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="finishTime" label="完成时间" width="180">
+        <el-table-column prop="finishTime" label="完成时间" width="180" header-align="center" align="center">
           <template #default="scope">
             {{ formatTimestamp(scope.row.finishTime) }}
           </template>
         </el-table-column>
-        <el-table-column prop="count" label="总数" width="80" />
-        <el-table-column prop="stars" label="星标" width="80" />
-        <el-table-column prop="updates" label="更新" width="80" />
-        <el-table-column prop="duration" label="耗时" width="80" />
-        <el-table-column label="操作" width="120">
+        <el-table-column prop="count" label="总数" width="80" header-align="center" align="center" />
+        <el-table-column prop="stars" label="星标" width="80" header-align="center" align="center" />
+        <el-table-column prop="updates" label="更新" width="80" header-align="center" align="center" />
+        <el-table-column prop="duration" label="耗时" width="80" header-align="center" align="center" />
+        <el-table-column label="操作" width="120" header-align="center" align="center">
           <template #default="scope">
             <el-button text type="primary" @click="viewDetail(scope.row)">查看详情</el-button>
+            <el-button text type="danger" @click="deleteRecord(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -384,7 +386,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { VideoPlay } from '@element-plus/icons-vue'
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
   name: 'ExecutionRecords',
@@ -833,6 +835,39 @@ export default {
       // 可以跳转到项目详情页或打开新窗口访问GitHub
       window.open(` https://github.com/${project.name} `, '_blank');
     }
+
+    // 删除执行记录
+    const deleteRecord = async (record) => {
+      try {
+        await ElMessageBox.confirm(
+          `确定要删除ID为 ${record.id} 的执行记录吗？此操作将同时删除所有关联的抓取项目，且无法恢复。`,
+          '警告',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+        );
+
+        ElMessage.info('正在删除执行记录...')
+        await axios.delete(`http://localhost:5001/api/execution-record/${record.id}`)
+        ElMessage.success('执行记录删除成功')
+        // 刷新数据
+        fetchExecutionHistory()
+        // 如果详情对话框打开且是当前记录，则关闭
+        if (detailDialogVisible.value && recordDetail.value && recordDetail.value.id === record.id) {
+          detailDialogVisible.value = false;
+        }
+      } catch (error) {
+        if (error === 'cancel') {
+          ElMessage.info('已取消删除操作');
+        } else {
+          console.error('删除执行记录失败:', error)
+          ElMessage.error('删除执行记录失败: ' + ((error.response && error.response.data && error.response.data.message) || error.message))
+        }
+      }
+    }
+
     onMounted(() => {
       fetchExecutionHistory()
       fetchSchedulerStatus()
@@ -874,7 +909,8 @@ export default {
       viewProjectDetails,
       viewAllHistory,
       handleAllHistoryPageChange,
-      handleAllHistorySizeChange
+      handleAllHistorySizeChange,
+      deleteRecord
     }
   }
 }

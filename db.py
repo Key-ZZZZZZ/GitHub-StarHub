@@ -5,3 +5,8 @@ DATABASE_URL = "mysql+pymysql://root:root@localhost:3306/github_trending?charset
 
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+from models import Base
+
+def create_db_tables():
+    Base.metadata.create_all(engine)
